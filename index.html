@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminal Financier | Portfolio</title>
+  <style>
+    :root {
+      --bg-color: #0a0a0a;
+      --card-bg: #141414;
+      --accent-orange: #ff9900;
+      --accent-green: #00ff66;
+      --text-gray: #a0a0a0;
+      --border-color: #262626;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: #ffffff;
+      font-family: 'Courier New', Courier, monospace;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .header {
+      border-bottom: 2px solid var(--accent-orange);
+      padding-bottom: 10px;
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header h1 {
+      color: var(--accent-orange);
+      margin: 0;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+    }
+
+    .status {
+      color: var(--accent-green);
+      font-size: 0.9rem;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 15px;
+    }
+
+    .card h2 {
+      color: var(--accent-orange);
+      font-size: 1.1rem;
+      margin-top: 0;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    .card ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .card li {
+      padding: 6px 0;
+      border-bottom: 1px dashed #222;
+      color: var(--text-gray);
+    }
+
+    .card li strong {
+      color: #fff;
+    }
+
+    .tag {
+      display: inline-block;
+      background-color: #222;
+      color: var(--accent-green);
+      padding: 2px 6px;
+      font-size: 0.8rem;
+      margin-top: 10px;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>[ BLOOMBERG TERMINAL PORTFOLIO ]</h1>
+    <div class="status">● MARKET OPEN</div>
+  </div>
+
+  <div class="grid-container">
+    
+    <!-- Projet 1 -->
+    <div class="card">
+      <h2>PROJET 1: ANALYSE D'ENTREPRISE</h2>
+      <ul>
+        <li><strong>Sujet :</strong> Étude financière complète (LVMH)</li>
+        <li><strong>Focus :</strong> Ratios de valorisation & rentabilité</li>
+        <li><strong>Livrable :</strong> Rapport d'analyse financier</li>
+      </ul>
+      <span class="tag">ANALYSE ÉTATS FINANCIERS</span>
+    </div>
+
+    <!-- Projet 2 -->
+    <div class="card">
+      <h2>PROJET 2: PORTEFEUILLE BOURSIER</h2>
+      <ul>
+        <li><strong>Composition :</strong> 5 à 10 actions sélectionnées</li>
+        <li><strong>Indice de référence :</strong> CAC 40 / S&P 500</li>
+        <li><strong>Métriques :</strong> Volatilité, rendement, Sharpe</li>
+      </ul>
+      <span class="tag">GUESTION DE PORTEFEUILLE</span>
+    </div>
+
+    <!-- Projet 3 -->
+    <div class="card">
+      <h2>PROJET 3: QUANTITATIF (PYTHON)</h2>
+      <ul>
+        <li><strong>Code :</strong> Python (yfinance, pandas, matplotlib)</li>
+        <li><strong>Calculs :</strong> Volatilité historique & rendements</li>
+        <li><strong>Visualisation :</strong> Graphiques boursiers dynamiques</li>
+      </ul>
+      <span class="tag">FINANCE QUANTITATIVE</span>
+    </div>
+
+  </div>
+
+</body>
+</html>
