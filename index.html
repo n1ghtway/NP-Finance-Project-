@@ -13,7 +13,6 @@
       --text-gray: #a0a0a0;
       --border-color: #262626;
     }
-
     body {
       background-color: var(--bg-color);
       color: #ffffff;
@@ -21,7 +20,6 @@
       margin: 0;
       padding: 20px;
     }
-
     .header {
       border-bottom: 2px solid var(--accent-orange);
       padding-bottom: 10px;
@@ -30,63 +28,49 @@
       justify-content: space-between;
       align-items: center;
     }
-
     .header h1 {
       color: var(--accent-orange);
       margin: 0;
       font-size: 1.5rem;
       text-transform: uppercase;
     }
-
     .status {
       color: var(--accent-green);
       font-size: 0.9rem;
     }
-
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-    }
-
     .card {
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 4px;
-      padding: 15px;
+      padding: 20px;
+      max-width: 600px;
     }
-
     .card h2 {
       color: var(--accent-orange);
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       margin-top: 0;
       border-bottom: 1px solid var(--border-color);
       padding-bottom: 8px;
     }
-
-    .card ul {
+    ul {
       list-style-type: none;
       padding: 0;
-      margin: 0;
     }
-
-    .card li {
-      padding: 6px 0;
+    li {
+      padding: 8px 0;
       border-bottom: 1px dashed #222;
       color: var(--text-gray);
     }
-
-    .card li strong {
+    li strong {
       color: #fff;
     }
-
     .tag {
       display: inline-block;
       background-color: #222;
       color: var(--accent-green);
-      padding: 2px 6px;
-      font-size: 0.8rem;
-      margin-top: 10px;
+      padding: 4px 8px;
+      font-size: 0.85rem;
+      margin-top: 15px;
       border-radius: 2px;
     }
   </style>
@@ -95,45 +79,41 @@
 
   <div class="header">
     <h1>[ BLOOMBERG TERMINAL PORTFOLIO ]</h1>
-    <div class="status">● MARKET OPEN</div>
+    <div class="status">● DATA LINKED</div>
   </div>
 
-  <div class="grid-container">
-    
-    <!-- Projet 1 -->
-    <div class="card">
-      <h2>PROJET 1: ANALYSE D'ENTREPRISE</h2>
-      <ul>
-        <li><strong>Sujet :</strong> Étude financière complète (LVMH)</li>
-        <li><strong>Focus :</strong> Ratios de valorisation & rentabilité</li>
-        <li><strong>Livrable :</strong> Rapport d'analyse financier</li>
-      </ul>
-      <span class="tag">ANALYSE ÉTATS FINANCIERS</span>
-    </div>
-
-    <!-- Projet 2 -->
-    <div class="card">
-      <h2>PROJET 2: PORTEFEUILLE BOURSIER</h2>
-      <ul>
-        <li><strong>Composition :</strong> 5 à 10 actions sélectionnées</li>
-        <li><strong>Indice de référence :</strong> CAC 40 / S&P 500</li>
-        <li><strong>Métriques :</strong> Volatilité, rendement, Sharpe</li>
-      </ul>
-      <span class="tag">GUESTION DE PORTEFEUILLE</span>
-    </div>
-
-    <!-- Projet 3 -->
-    <div class="card">
-      <h2>PROJET 3: QUANTITATIF (PYTHON)</h2>
-      <ul>
-        <li><strong>Code :</strong> Python (yfinance, pandas, matplotlib)</li>
-        <li><strong>Calculs :</strong> Volatilité historique & rendements</li>
-        <li><strong>Visualisation :</strong> Graphiques boursiers dynamiques</li>
-      </ul>
-      <span class="tag">FINANCE QUANTITATIVE</span>
-    </div>
-
+  <div class="card" id="projet-container">
+    <h2 id="p-titre">CHARGEMENT...</h2>
+    <ul>
+      <li><strong>Entreprise :</strong> <span id="p-entreprise">-</span></li>
+      <li><strong>Secteur :</strong> <span id="p-secteur">-</span></li>
+      <li><strong>Chiffre d'affaires :</strong> <span id="p-ca">-</span></li>
+      <li><strong>Marge Opérationnelle :</strong> <span id="p-marge">-</span></li>
+      <li><strong>ROE :</strong> <span id="p-roe">-</span></li>
+      <li><strong>Notes :</strong> <span id="p-comm">-</span></li>
+    </ul>
+    <span class="tag" id="p-statut">-</span>
   </div>
+
+  <script>
+    // Chargement automatique des données du fichier data.json
+    fetch('data.json')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('p-titre').innerText = data.projet1.titre;
+        document.getElementById('p-entreprise').innerText = data.entreprise;
+        document.getElementById('p-secteur').innerText = data.secteur;
+        document.getElementById('p-ca').innerText = data.projet1.chiffreAffaires;
+        document.getElementById('p-marge').innerText = data.projet1.margeNoperate;
+        document.getElementById('p-roe').innerText = data.projet1.projet1?.roe || data.projet1.roe;
+        document.getElementById('p-comm').innerText = data.projet1.commentaire;
+        document.getElementById('p-statut').innerText = "STATUT : " + data.projet1.statut.toUpperCase();
+      })
+      .catch(error => {
+        console.error('Erreur lors du chargement du JSON:', error);
+        document.getElementById('p-titre').innerText = "ERREUR DE CHARGEMENT DES DONNÉES";
+      });
+  </script>
 
 </body>
 </html>
