@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Financial Audit - Terminal</title>
+    <link rel="stylesheet" href="style-intro.css">
+    <style>
+        body {
+            background-color: #050505;
+            color: #00ff41;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+        }
+        .audit-container {
+            max-width: 960px;
+            margin: 0 auto;
+            border: 1px solid #00ff41;
+            padding: 30px;
+            background-color: rgba(0, 255, 65, 0.02);
+        }
+        .audit-header {
+            border-bottom: 2px solid #00ff41;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .audit-title {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .audit-subtitle {
+            font-size: 13px;
+            color: #00b32d;
+            margin-top: 5px;
+        }
+        .section-box {
+            border: 1px solid #008f24;
+            padding: 18px;
+            margin-bottom: 22px;
+            background-color: rgba(0, 255, 65, 0.03);
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 1px dashed #008f24;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+        .swot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .swot-item {
+            border: 1px solid #005916;
+            padding: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+        th, td {
+            border: 1px solid #008f24;
+            padding: 8px 10px;
+            text-align: right;
+        }
+        th:first-child, td:first-child {
+            text-align: left;
+            font-weight: bold;
+        }
+        th {
+            background-color: rgba(0, 255, 65, 0.12);
+            color: #ffffff;
+        }
+        .pos { color: #00ff41; font-weight: bold; }
+        .neg { color: #ff3333; font-weight: bold; }
+        .verdict-banner {
+            border: 1px solid #00ff41;
+            background-color: rgba(0, 255, 65, 0.1);
+            padding: 15px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #008f24;
+        }
+        .btn-terminal {
+            background: transparent;
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            padding: 12px 20px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .btn-terminal:hover {
+            background-color: #00ff41;
+            color: #000000;
+        }
+
+        /* =========================================================
+           CLEAN PDF / PRINT STYLING (TRIGGERED ON DOWNLOAD CLICK)
+           ========================================================= */
+        @media print {
+            body {
+                background-color: #ffffff !important;
+                color: #111111 !important;
+                font-family: Arial, Helvetica, sans-serif !important;
+                padding: 0;
+            }
+            .audit-container {
+                border: none !important;
+                background: #ffffff !important;
+                padding: 0;
+                max-width: 100%;
+            }
+            .audit-header {
+                border-bottom: 2px solid #111111 !important;
+            }
+            .audit-subtitle {
+                color: #555555 !important;
+            }
+            .section-box {
+                border: 1px solid #cccccc !important;
+                background: #ffffff !important;
+                page-break-inside: avoid;
+            }
+            .section-title {
+                color: #000000 !important;
+                border-bottom: 1px solid #cccccc !important;
+            }
+            .swot-item {
+                border: 1px solid #dddddd !important;
+            }
+            th {
+                background-color: #f0f0f0 !important;
+                color: #000000 !important;
+                border: 1px solid #bbbbbb !important;
+            }
+            td {
+                border: 1px solid #cccccc !important;
+                color: #111111 !important;
+            }
+            .pos { color: #0a7a28 !important; }
+            .neg { color: #c91c1c !important; }
+            .verdict-banner {
+                border: 2px solid #111111 !important;
+                background-color: #f7f7f7 !important;
+                color: #000000 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="audit-container" id="report-root">
+        <div class="audit-header">
+            <div class="audit-title" id="rep-title">LOADING AUDIT...</div>
+            <div class="audit-subtitle" id="rep-subtitle"></div>
+        </div>
+
+        <!-- 1. Business Model -->
+        <div class="section-box">
+            <div class="section-title">1. EXECUTIVE SUMMARY & BUSINESS MODEL</div>
+            <p id="rep-bm"></p>
+        </div>
+
+        <!-- 2. SWOT -->
+        <div class="section-box">
+            <div class="section-title">2. STRATEGIC SWOT ANALYSIS</div>
+            <div class="swot-grid">
+                <div class="swot-item"><strong>[+] STRENGTHS:</strong><br><span id="swot-s"></span></div>
+                <div class="swot-item"><strong>[-] WEAKNESSES:</strong><br><span id="swot-w"></span></div>
+                <div class="swot-item"><strong>[*] OPPORTUNITIES:</strong><br><span id="swot-o"></span></div>
+                <div class="swot-item"><strong>[!] THREATS:</strong><br><span id="swot-t"></span></div>
+            </div>
+        </div>
+
+        <!-- 3. Financial Data -->
+        <div class="section-box">
+            <div class="section-title">3. FINANCIAL STATEMENTS & CASH FLOW (2022–2025)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>FINANCIAL METRIC</th>
+                        <th>2022</th>
+                        <th>2023</th>
+                        <th>2024</th>
+                        <th>2025</th>
+                        <th>VAR (%)</th>
+                    </tr>
+                </thead>
+                <tbody id="rep-table-body"></tbody>
+            </table>
+            <p style="margin-top: 15px;" id="rep-fin-analysis"></p>
+        </div>
+
+        <!-- 4. Capital Allocation & Valuation -->
+        <div class="section-box">
+            <div class="section-title">4. CAPITAL ALLOCATION & SECTOR BENCHMARK</div>
+            <p><strong>Shareholder Return:</strong> <span id="rep-cap"></span></p>
+            <p><strong>Valuation & Peers:</strong> <span id="rep-val"></span></p>
+        </div>
+
+        <!-- 5. Analyst Verdict -->
+        <div class="section-box">
+            <div class="section-title">5. ANALYST THESIS & FINAL VERDICT</div>
+            <div class="verdict-banner" id="rep-verdict"></div>
+        </div>
+
+        <!-- Action Buttons (Hidden when saving to PDF) -->
+        <div class="controls-bar no-print">
+            <a href="javascript:history.back()" class="btn-terminal">&lt; RETURN TO MODULE</a>
+            <button onclick="downloadPDF()" class="btn-terminal">[↓] DOWNLOAD / SAVE AS PDF</button>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const ticker = params.get("ticker") || "MCD";
+        const company = companiesData.find(c => c.ticker === ticker);
+
+        if (company && company.reportData) {
+            const r = company.reportData;
+            document.title = `Audit Report - ${company.name} (${company.ticker})`;
+            document.getElementById("rep-title").innerText = `FULL FINANCIAL AUDIT : ${company.name.toUpperCase()} (${company.ticker})`;
+            document.getElementById("rep-subtitle").innerText = r.subtitle;
+            document.getElementById("rep-bm").innerText = r.businessModel;
+
+            document.getElementById("swot-s").innerText = r.swot.strengths;
+            document.getElementById("swot-w").innerText = r.swot.weaknesses;
+            document.getElementById("swot-o").innerText = r.swot.opportunities;
+            document.getElementById("swot-t").innerText = r.swot.threats;
+
+            const tbody = document.getElementById("rep-table-body");
+            r.financialTable.forEach(row => {
+                const isNeg = row.var.startsWith("-");
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${row.metric}</td>
+                    <td>${row.y2022}</td>
+                    <td>${row.y2023}</td>
+                    <td>${row.y2024}</td>
+                    <td>${row.y2025}</td>
+                    <td class="${isNeg ? 'neg' : 'pos'}">${row.var}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById("rep-fin-analysis").innerText = r.financialAnalysis;
+            document.getElementById("rep-cap").innerText = r.capitalAllocation;
+            document.getElementById("rep-val").innerText = r.valuation;
+            document.getElementById("rep-verdict").innerText = `VERDICT : ${r.conclusion}`;
+        } else {
+            document.getElementById("report-root").innerHTML = "<h2>[ERROR] FULL AUDIT DATA NOT FOUND FOR THIS TICKER.</h2><a href='javascript:history.back()' class='btn-terminal'>&lt; GO BACK</a>";
+        }
+
+        function downloadPDF() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
