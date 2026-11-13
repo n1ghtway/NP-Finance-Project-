@@ -1,119 +1,76 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Terminal Financier | Portfolio</title>
-  <style>
-    :root {
-      --bg-color: #0a0a0a;
-      --card-bg: #141414;
-      --accent-orange: #ff9900;
-      --accent-green: #00ff66;
-      --text-gray: #a0a0a0;
-      --border-color: #262626;
-    }
-    body {
-      background-color: var(--bg-color);
-      color: #ffffff;
-      font-family: 'Courier New', Courier, monospace;
-      margin: 0;
-      padding: 20px;
-    }
-    .header {
-      border-bottom: 2px solid var(--accent-orange);
-      padding-bottom: 10px;
-      margin-bottom: 25px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .header h1 {
-      color: var(--accent-orange);
-      margin: 0;
-      font-size: 1.5rem;
-      text-transform: uppercase;
-    }
-    .status {
-      color: var(--accent-green);
-      font-size: 0.9rem;
-    }
-    .card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      padding: 20px;
-      max-width: 600px;
-    }
-    .card h2 {
-      color: var(--accent-orange);
-      font-size: 1.2rem;
-      margin-top: 0;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 8px;
-    }
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    li {
-      padding: 8px 0;
-      border-bottom: 1px dashed #222;
-      color: var(--text-gray);
-    }
-    li strong {
-      color: #fff;
-    }
-    .tag {
-      display: inline-block;
-      background-color: #222;
-      color: var(--accent-green);
-      padding: 4px 8px;
-      font-size: 0.85rem;
-      margin-top: 15px;
-      border-radius: 2px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction - Terminal</title>
+    <!-- Liaison vers le fichier CSS -->
+    <link rel="stylesheet" href="style-intro.css">
 </head>
 <body>
 
-  <div class="header">
-    <h1>[ BLOOMBERG TERMINAL PORTFOLIO ]</h1>
-    <div class="status">● DATA LINKED</div>
-  </div>
+    <!-- Main terminal container -->
+    <div class="terminal">
 
-  <div class="card" id="projet-container">
-    <h2 id="p-titre">CHARGEMENT...</h2>
-    <ul>
-      <li><strong>Entreprise :</strong> <span id="p-entreprise">-</span></li>
-      <li><strong>Secteur :</strong> <span id="p-secteur">-</span></li>
-      <li><strong>Chiffre d'affaires :</strong> <span id="p-ca">-</span></li>
-      <li><strong>Marge Opérationnelle :</strong> <span id="p-marge">-</span></li>
-      <li><strong>ROE :</strong> <span id="p-roe">-</span></li>
-      <li><strong>Notes :</strong> <span id="p-comm">-</span></li>
-    </ul>
-    <span class="tag" id="p-statut">-</span>
-  </div>
+        <!-- Header: system identification -->
+        <div class="header">
+            <div class="title">FINANCIAL SYSTEM TERMINAL</div>
+            <div>NETWORK ACCESS : ESTABLISHED</div>
+            <div>SESSION : INTRODUCTION_001</div>
+        </div>
 
-  <script>
-    // Chargement automatique des données du fichier data.json
-    fetch('data.json')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('p-titre').innerText = data.projet1.titre;
-        document.getElementById('p-entreprise').innerText = data.entreprise;
-        document.getElementById('p-secteur').innerText = data.secteur;
-        document.getElementById('p-ca').innerText = data.projet1.chiffreAffaires;
-        document.getElementById('p-marge').innerText = data.projet1.margeNoperate;
-        document.getElementById('p-roe').innerText = data.projet1.projet1?.roe || data.projet1.roe;
-        document.getElementById('p-comm').innerText = data.projet1.commentaire;
-        document.getElementById('p-statut').innerText = "STATUT : " + data.projet1.statut.toUpperCase();
-      })
-      .catch(error => {
-        console.error('Erreur lors du chargement du JSON:', error);
-        document.getElementById('p-titre').innerText = "ERREUR DE CHARGEMENT DES DONNÉES";
-      });
-  </script>
+        <!-- Welcome message with typing animation -->
+        <div class="intro" id="intro-section">
+            <div id="typing-text"></div>
+            <span id="typing-cursor" class="cursor"></span>
+        </div>
 
+        <!-- Three available destinations -->
+        <div class="choices" id="choices">
+            <!-- OPTION 01 -->
+            <a class="choice" href="#" onclick="startLoading('destination1'); return false;">
+                [01] FINANCIAL ANALYSIS
+            </a>
+
+            <!-- OPTION 02 -->
+            <a class="choice" href="#" onclick="startLoading('destination2'); return false;">
+                [02] STOCK PORTFOLIO
+            </a>
+
+            <!-- OPTION 03 -->
+            <a class="choice" href="#" onclick="startLoading('destination3'); return false;">
+                [03] QUANTITATIVE ANALYSIS WITH PYTHON
+            </a>
+        </div>
+
+        <!-- LOADING SCREEN -->
+        <div class="loading-screen" id="loading-screen">
+            <p>ESTABLISHING CONNECTION...</p>
+
+            <div id="loading-message">
+                INITIALIZING REQUEST...
+            </div>
+
+            <div class="loading-bar-container">
+                <div class="loading-bar" id="loading-bar"></div>
+            </div>
+
+            <div class="loading-percent" id="loading-percent">
+                0%
+            </div>
+
+            <span class="loading-cursor"></span>
+        </div>
+
+        <!-- Navigation status and blinking cursor -->
+        <div class="footer">
+            <span id="footer-status">SYSTEM READY // WAITING FOR USER INPUT</span>
+            <span id="footer-cursor" class="cursor"></span>
+        </div>
+
+    </div>
+
+    <!-- Liaison vers le fichier JavaScript -->
+    <script src="script-intro.js"></script>
 </body>
 </html>
