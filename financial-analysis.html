@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Analysis - Terminal</title>
+    <link rel="stylesheet" href="style-financial-analysis.css">
+    <style>
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            border: 1px solid #008f24;
+            background-color: rgba(0, 255, 65, 0.05);
+            padding: 10px 0;
+            margin-bottom: 30px;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+        .ticker-move {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker-scroll 25s linear infinite;
+        }
+        .ticker-wrap:hover .ticker-move {
+            animation-play-state: paused;
+        }
+        .ticker-item {
+            display: inline-block;
+            margin-right: 45px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        @keyframes ticker-scroll {
+            0%   { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+        .positive { color: #00ff41; }
+        .negative { color: #ff3333; }
+        .section-label { margin-bottom: 15px; font-weight: bold; letter-spacing: 1px; color: #00ff41; }
+        .company-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        .company-table th, .company-table td { border: 1px solid #008f24; padding: 12px 15px; text-align: left; color: #00ff41; }
+        .company-table th { background-color: rgba(0, 255, 65, 0.12); color: #00ff41; font-size: 14px; letter-spacing: 2px; }
+        .company-row { cursor: pointer; transition: 0.2s; }
+        .company-row:hover { background-color: rgba(0, 255, 65, 0.12); }
+        .details-panel { display: none; border: 1px solid #00ff41; background-color: rgba(0, 255, 65, 0.04); padding: 20px; margin-bottom: 30px; line-height: 1.7; color: #00ff41; }
+        .details-header { display: flex; justify-content: space-between; border-bottom: 1px solid #008f24; padding-bottom: 10px; margin-bottom: 15px; font-weight: bold; font-size: 18px; }
+        .close-btn { cursor: pointer; color: #ff3333; }
+        .close-btn:hover { color: #ff6666; text-decoration: underline; }
+        .action-btn { background: transparent; border: 1px solid #008f24; color: #00ff41; padding: 8px 15px; cursor: pointer; margin-top: 15px; font-family: inherit; font-weight: bold; transition: 0.2s; }
+        .action-btn:hover { background-color: rgba(0, 255, 65, 0.2); border-color: #00ff41; }
+        .back-link { display: inline-block; color: #00ff41; text-decoration: none; border: 1px solid #008f24; padding: 10px 20px; transition: 0.2s; }
+        .back-link:hover { background-color: rgba(0, 255, 65, 0.12); border: 1px solid #00ff41; color: #ffffff; }
+    </style>
+</head>
+<body>
+
+    <div class="terminal">
+
+        <div class="header">
+            <div class="title">MODULE : FINANCIAL ANALYSIS</div>
+            <div>STATUS : JS FEED CONNECTED</div>
+            <div>SESSION : LOCAL_DATA_ACTIVE</div>
+        </div>
+
+        <!-- Ticker -->
+        <div class="ticker-wrap">
+            <div class="ticker-move" id="ticker-content"></div>
+        </div>
+
+       <!-- Tableau des entreprises -->
+        <div class="section-label">&gt; ANALYZED ENTITIES (LOADED FROM EXTERNAL JS) :</div>
+        
+        <!-- Barre de recherche -->
+        <div style="margin-bottom: 20px;">
+            <input type="text" id="search-input" placeholder="SEARCH BY TICKER, COMPANY NAME OR SECTOR..." 
+                   onkeyup="filterCompanies()" 
+                   style="width: 100%; padding: 10px 15px; background-color: rgba(0, 255, 65, 0.05); border: 1px solid #008f24; color: #00ff41; font-family: inherit; outline: none; box-sizing: border-box;">
+        </div>
+
+        <table class="company-table">
+            <thead>
+                <tr>
+                    <th>TICKER</th>
+                    <th>COMPANY NAME</th>
+                    <th>SECTOR</th>
+                    <th>VARIATION</th>
+                    <th>VERDICT</th>
+                </tr>
+            </thead>
+            <tbody id="company-list"></tbody>
+        </table>
+
+        <!-- Details Panel -->
+        <div class="details-panel" id="details-panel">
+            <div class="details-header">
+                <span id="detail-title">COMPANY REPORT</span>
+                <span class="close-btn" id="close-btn-trigger">[X] CLOSE</span>
+            </div>
+            <div id="detail-metrics" style="margin-bottom: 15px; color: #ffffff;"></div>
+            <div id="detail-summary"></div>
+            
+            <!-- Open Full Audit Report Button -->
+            <button class="action-btn" id="toggle-details-btn" style="display: none;">[>] OPEN FULL AUDIT REPORT (VIEW & PDF)</button>
+        </div>
+
+        <div>
+            <a href="index.html" class="back-link">&lt; RETURN TO MAIN TERMINAL</a>
+        </div>
+
+        <div class="footer" style="margin-top: 20px; color: #00ff41;">
+            <span>SYSTEM READY // SELECT AN ENTITY FOR FULL AUDIT</span>
+            <span class="cursor"></span>
+        </div>
+
+    </div>
+
+    <script src="data.js"></script>
+
+    <script>
+        const companies = companiesData;
+        let currentSelectedCompany = null;
+
+        initDashboard();
+
+        function initDashboard() {
+            const tickerContainer = document.getElementById("ticker-content");
+            const tableBody = document.getElementById("company-list");
+            tableBody.innerHTML = "";
+            tickerContainer.innerHTML = "";
+
+            companies.forEach((comp, index) => {
+                const arrow = comp.isPositive ? "▲" : "▼";
+                const colorCode = comp.isPositive ? "#00ff41" : "#ff3333";
+
+                // Remplissage du bandeau avec la couleur dynamique
+                const tickerSpan = document.createElement("span");
+                tickerSpan.className = "ticker-item";
+                tickerSpan.innerHTML = `<span style="color: ${colorCode};">${comp.ticker} ${arrow} ${comp.change}</span>`;
+                tickerContainer.appendChild(tickerSpan);
+
+                // Remplissage du tableau (seule la variation prend la couleur dynamique, le reste garde le style terminal propre)
+                const row = document.createElement("tr");
+                row.className = "company-row";
+                row.onclick = () => showDetails(index);
+                row.innerHTML = `
+                    <td><strong>${comp.ticker}</strong></td>
+                    <td>${comp.name}</td>
+                    <td>${comp.sector}</td>
+                    <td style="color: ${colorCode}; font-weight: bold;">${arrow} ${comp.change}</td>
+                    <td>[${comp.verdict}]</td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            // Fix close button listener explicitly
+            document.getElementById("close-btn-trigger").onclick = closeDetails;
+        }
+
+        function showDetails(index) {
+            currentSelectedCompany = companies[index];
+            const panel = document.getElementById("details-panel");
+            const arrow = currentSelectedCompany.isPositive ? "▲" : "▼";
+            const colorCode = currentSelectedCompany.isPositive ? "#00ff41" : "#ff3333";
+
+            document.getElementById("detail-title").innerHTML = 
+                `AUDIT REPORT : ${currentSelectedCompany.name} (${currentSelectedCompany.ticker}) <span style="color: ${colorCode};">${arrow} ${currentSelectedCompany.change}</span>`;
+            
+            document.getElementById("detail-metrics").innerHTML = 
+                `&gt; <strong>KEY METRICS (2022-2025) :</strong> ${currentSelectedCompany.metrics}`;
+            
+            document.getElementById("detail-summary").innerHTML = 
+                `&gt; <strong>ANALYSIS REPORT :</strong><br><br>${currentSelectedCompany.summary}`;
+
+            // Handle full audit report button visibility inside showDetails
+            const toggleBtn = document.getElementById("toggle-details-btn");
+
+            if (currentSelectedCompany.hasFullReport) {
+                toggleBtn.style.display = "inline-block";
+                toggleBtn.onclick = () => {
+                    window.location.href = `audit-report.html?ticker=${currentSelectedCompany.ticker}`;
+                };
+            } else {
+                toggleBtn.style.display = "none";
+            }
+
+            panel.style.display = "block";
+            panel.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function closeDetails() {
+            const panel = document.getElementById("details-panel");
+            panel.style.display = "none";
+        }
+
+        function filterCompanies() {
+            const query = document.getElementById("search-input").value.toLowerCase();
+            const tableBody = document.getElementById("company-list");
+            tableBody.innerHTML = "";
+
+            companies.forEach((comp, index) => {
+                if (comp.ticker.toLowerCase().includes(query) || 
+                    comp.name.toLowerCase().includes(query) || 
+                    comp.sector.toLowerCase().includes(query)) {
+                    
+                    const arrow = comp.isPositive ? "▲" : "▼";
+                    const colorCode = comp.isPositive ? "#00ff41" : "#ff3333";
+
+                    const row = document.createElement("tr");
+                    row.className = "company-row";
+                    row.onclick = () => showDetails(index);
+                    row.innerHTML = `
+                        <td><strong>${comp.ticker}</strong></td>
+                        <td>${comp.name}</td>
+                        <td>${comp.sector}</td>
+                        <td style="color: ${colorCode}; font-weight: bold;">${arrow} ${comp.change}</td>
+                        <td>[${comp.verdict}]</td>
+                    `;
+                    tableBody.appendChild(row);
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
