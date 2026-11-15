@@ -16,7 +16,7 @@ async function loadQuantData() {
         if (!response.ok) throw new Error("HTTP error");
         quantData = await response.json();
     } catch (error) {
-        console.warn("Chargement quant_data.json impossible, utilisation du fallback JSON.");
+        console.warn("Chargement via fetch bloqué (mode fichier local), utilisation du fallback JSON.");
         quantData = FALLBACK_DATA;
     }
     renderAll();
@@ -205,6 +205,7 @@ function downloadJsonFile() {
     dlAnchor.remove();
 }
 
+// Données de secours si ouverture directe en local (file://)
 const FALLBACK_DATA = {
     "optimal_portfolio": {
         "expected_return": 24.93,
