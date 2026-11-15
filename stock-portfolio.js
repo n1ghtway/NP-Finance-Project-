@@ -3,8 +3,8 @@
    File: stock-portfolio.js
    ============================================================================ */
 
-// 1. CONFIGURATION API (Remplace par ta clé Finnhub)
-const API_KEY = "dbrobt9r01qvp4ie2qhgdbrobt9r01qvp4ie2qi0"; 
+// Clé API désactivée pour test direct sur GitHub
+const API_KEY = ""; 
 
 let companiesData = [];
 
@@ -35,7 +35,6 @@ async function loadQuantDataFeed() {
         const data = await response.json();
         
         if (data && data.assets) {
-            // Fusionne les données JSON avec les descriptions qualitatives de secours
             companiesData = FALLBACK_COMPANIES_DATA.map(fallbackComp => {
                 const jsonMatch = data.assets.find(a => a.ticker === fallbackComp.ticker);
                 if (jsonMatch) {
@@ -54,35 +53,9 @@ async function loadQuantDataFeed() {
             companiesData = FALLBACK_COMPANIES_DATA;
         }
     } catch (error) {
-        console.warn("Chargement via fetch bloqué (mode fichier local ou hors-ligne), utilisation des données de secours.");
+        console.warn("quant_data.json non trouvé, utilisation des données de secours.");
         companiesData = FALLBACK_COMPANIES_DATA;
     }
-}
-
-// LIVE STOCK PRICES FETCHING (Finnhub)
-async function fetchLiveStockPrices() {
-    if (API_KEY === "dbrobt9r01qvp4ie2qhgdbrobt9r01qvp4ie2qi0" || !API_KEY) return;
-
-    const requests = companiesData.map(async (company) => {
-        try {
-            const response = await fetch(`https://finnhub.io/api/v1/quote?symbol=${company.ticker}&token=${API_KEY}`);
-            if (!response.ok) return;
-
-            const data = await response.json();
-            if (data && data.c && data.c > 0) {
-                const currency = company.price.startsWith("€") ? "€" : "$";
-                company.price = `${currency}${data.c.toFixed(2)}`;
-                
-                const sign = data.dp >= 0 ? "+" : "";
-                company.change = `${sign}${data.dp.toFixed(2)}%`;
-                company.isPositive = data.dp >= 0;
-            }
-        } catch (error) {
-            // Ignoré en cas de coupure réseau
-        }
-    });
-
-    await Promise.all(requests);
 }
 
 // 1. RENDER LIVE TICKER TAPE
@@ -242,7 +215,7 @@ function renderMatrixTable() {
     `).join("");
 }
 
-// DONNÉES DE SECOURS (FALLBACK DATA) POUR MODE HORS-LIGNE
+// DONNÉES DE SECOURS (FALLBACK DATA)
 const FALLBACK_COMPANIES_DATA = [
     {
         id: "01", name: "APPLE INC.", shortName: "Apple", ticker: "AAPL", exchange: "NASDAQ", hq: "Cupertino, CA (USA)", price: "$356.27", change: "+3.81%", isPositive: true, sector: "Technology & Services", sectorGroup: "TECH", dominantModel: "Hardware ecosystem & recurring services", size: "Revenue ~$383.2B | Employees: ~161,000 | Market Cap: > $3,000B", mission: "Design intuitive, integrated personal technologies that enrich daily life while safeguarding privacy.", products: "Hardware (iPhone, Mac, iPad, Watch, AirPods) & high-margin Services (App Store, iCloud, Apple Pay).", target: "Primarily B2C (middle-to-high-income consumers) with growing B2B enterprise fleet adoption.", differentiation: "Exceptional pricing power, full vertical integration (Apple Silicon + iOS/macOS), and status-symbol branding vs. Samsung, Google, and Microsoft.", swot: { s: "Closed ecosystem driving record loyalty; massive Free Cash Flow (> $100B/yr).", w: "High revenue dependence on iPhone (> 50%); premium pricing limiting emerging-market volume.", o: "Services expansion & Apple Intelligence driving hardware upgrade cycles.", t: "Antitrust scrutiny (EU DMA, US DOJ) on App Store & Asian supply chain risks." }, highlight: "Rollout of Apple Intelligence and manufacturing diversification toward India to reduce reliance on China.", netMarginNum: 25.83, netMarginText: "~25% – 26% (High)", cashCategory: "HYBRID", cashModelText: "Hybrid (Recurring + Replacement): Services subscriptions + iPhone upgrade cycles", riskValuation: "Defensive Growth / Premium P/E (Massive share buybacks & FCF stability)", moat: "Closed hardware/software ecosystem & brand pricing power"
@@ -276,25 +249,17 @@ const FALLBACK_COMPANIES_DATA = [
     }
 ];
 
-// INITIALIZATION & EVENT LISTENERS
 document.addEventListener("DOMContentLoaded", async () => {
-    // 1. Animation de frappe sur le titre
     typeWriterEffect("terminal-title", "FINANCIAL SYSTEM TERMINAL", 40);
 
-    // 2. Charge en priorité les données depuis quant_data.json avec secours hors-ligne
     await loadQuantDataFeed();
 
-    // 3. Tente de charger les prix en direct (si API_KEY configurée)
-    await fetchLiveStockPrices();
-
-    // 4. Affichage initial du terminal avec les données chargées
     renderTickerTape();
     renderScopeTable();
     renderProfiles();
     renderAsciiChart();
     renderMatrixTable();
 
-    // 5. Bouton de retour en arrière intelligent
     const returnBtn = document.getElementById("return-btn");
     if (returnBtn) {
         returnBtn.addEventListener("click", (e) => {
@@ -305,7 +270,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // 6. Filtres par secteur
     document.querySelectorAll("#sector-filters .term-btn").forEach(btn => {
         btn.addEventListener("click", () => {
             document.querySelectorAll("#sector-filters .term-btn").forEach(b => b.classList.remove("active"));
@@ -315,13 +279,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     });
 
-    // 7. Barre de recherche query>
     const searchInput = document.getElementById("profile-search");
     if (searchInput) {
         searchInput.addEventListener("input", renderProfiles);
     }
 
-    // 8. Boutons Expand / Collapse All
     const expandAllBtn = document.getElementById("btn-expand-all");
     if (expandAllBtn) {
         expandAllBtn.addEventListener("click", () => {
@@ -336,7 +298,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // 9. Filtres par modèle de cash
     document.querySelectorAll("#cash-filters .term-btn").forEach(btn => {
         btn.addEventListener("click", () => {
             document.querySelectorAll("#cash-filters .term-btn").forEach(b => b.classList.remove("active"));
