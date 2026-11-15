@@ -1,8 +1,9 @@
-const companiesData = [
+let companiesData = [
     {
         "ticker": "AAPL",
         "name": "Apple Inc.",
         "sector": "Technology",
+        "price": "$356.27",
         "change": "+3.81%",
         "isPositive": true,
         "verdict": "BUY / STRONG",
@@ -13,6 +14,7 @@ const companiesData = [
         "ticker": "TSLA",
         "name": "Tesla Motors",
         "sector": "Automotive / AI",
+        "price": "$390.22",
         "change": "+10.01%",
         "isPositive": true,
         "verdict": "HOLD / VOLATILE",
@@ -23,6 +25,7 @@ const companiesData = [
         "ticker": "MC.PA",
         "name": "LVMH",
         "sector": "Luxury Goods",
+        "price": "€403.45",
         "change": "+1.62%",
         "isPositive": true,
         "verdict": "BUY / SOLID",
@@ -33,6 +36,7 @@ const companiesData = [
         "ticker": "MCD",
         "name": "McDonald's Corp.",
         "sector": "Consumer / Real Estate",
+        "price": "$271.97",
         "change": "+11.94%",
         "isPositive": true,
         "verdict": "FAIRLY VALUED / CORE",
@@ -66,3 +70,53 @@ const companiesData = [
         }
     }
 ];
+
+// Fonction asynchrone pour charger les données dynamiques depuis quant_data_2.json
+async function loadJsonDataFeed() {
+    try {
+        const response = await fetch("quant_data.json");
+        if (!response.ok) throw new Error("Fichier JSON introuvable");
+        const jsonData = await response.json();
+
+        if (jsonData && jsonData.assets) {
+            jsonData.assets.forEach(asset => {
+                const comp = companiesData.find(c => c.ticker === asset.ticker);
+                const currency = asset.ticker === "MC.PA" ? "€" : "$";
+                const formattedPrice = `${currency}${asset.price.toFixed(2)}`;
+                const sign = asset.momentum_20d >= 0 ? "+" : "";
+                const formattedChange = `${sign}${asset.momentum_20d.toFixed(2)}%`;
+                const isPos = asset.momentum_20d >= 0;
+
+                if (comp) {
+                    // Met à jour les valeurs existantes avec le JSON
+                    comp.price = formattedPrice;
+                    comp.change = formattedChange;
+                    comp.isPositive = isPos;
+                } else {
+                    // Ajoute l'actif s'il est présent dans le JSON mais absent de la liste de base
+                    companiesData.push({
+                        ticker: asset.ticker,
+                        name: asset.name,
+                        sector: "Global Market",
+                        price: formattedPrice,
+                        change: formattedChange,
+                        isPositive: isPos,
+                        verdict: asset.signal === "HAUSSIER" ? "BUY / MOMENTUM" : "HOLD / WATCH",
+                        metrics: `Annual Return: ${asset.annual_return}% | Volatility: ${asset.annual_volatility}%`,
+                        summary: `Signal technique: ${asset.signal} | SMA 50: ${asset.sma_50}`
+                    });
+                }
+            });
+
+            // Si la fonction d'affichage du dashboard existe sur la page HTML, on la relance pour rafraîchir l'affichage
+            if (typeof initDashboard === "function") {
+                initDashboard();
+            }
+        }
+    } catch (error) {
+        console.warn("Mode hors-ligne détecté ou quant_data_2.json manquant. Utilisation des valeurs par défaut.", error);
+    }
+}
+
+// Lancement automatique du chargement dès l'inclusion du script
+loadJsonDataFeed();
