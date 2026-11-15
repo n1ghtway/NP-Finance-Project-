@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STOCK PORTFOLIO - FINANCIAL SYSTEM TERMINAL</title>
+    <link rel="stylesheet" href="stock-portfolio.css">
+</head>
+<body>
+    <div class="terminal">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="title">FINANCIAL SYSTEM TERMINAL</div>
+            <div class="status-line">NETWORK ACCESS : ESTABLISHED</div>
+            <div class="status-line">SESSION : STOCK_PORTFOLIO_002</div>
+        </div>
+
+        <!-- RETURN NAVIGATION -->
+        <div class="top-nav">
+            <a href="index.html" id="return-btn" class="return-link">&lt; RETURN TO MAIN TERMINAL</a>
+        </div>
+
+        <!-- LIVE TICKER TAPE -->
+        <div class="ticker-wrap" aria-label="Live Stock Quotes">
+            <div class="ticker-move" id="ticker-tape"></div>
+        </div>
+
+        <!-- SECTION 01: STUDY FRAMEWORK AND GUIDING THEME -->
+        <div class="section" id="section-01">
+            <div class="section-header">01. STUDY FRAMEWORK AND GUIDING THEME</div>
+            
+            <div class="prompt-box">
+                <span class="prompt-label">GUIDING RESEARCH QUESTION (2022–2025) :</span>
+                How do dominant players from radically different sectors manage to maintain a sustainable competitive advantage—an "economic moat"—and generate value in the face of the technological and macroeconomic shifts occurring between 2022 and 2025?
+                <br><br>
+                This portfolio presents a comparative strategic and financial analysis of <strong>10 multinational corporations</strong> spanning <strong>6 key sectors</strong> of the global economy (Technology & AI, Semiconductors, E-commerce, Luxury, Consumer Goods & Real Estate, and Financial Services).
+            </div>
+
+            <div class="subsection-title">PERIMETER OF STUDIED CORPORATIONS (CLICK ROW TO INSPECT DOSSIER)</div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>COMPANY</th>
+                            <th>TICKER</th>
+                            <th>CORE SECTOR</th>
+                            <th>DOMINANT BUSINESS MODEL</th>
+                            <th>LIVE QUOTE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scope-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 02: COMPANY PROFILES (01 TO 10) -->
+        <div class="section" id="section-02">
+            <div class="section-header">02. COMPANY PROFILES (01 TO 10)</div>
+
+            <div class="controls-bar">
+                <div class="filter-group" id="sector-filters">
+                    <button class="term-btn active" data-sector="ALL">[ALL SECTORS]</button>
+                    <button class="term-btn" data-sector="TECH">[TECH & CLOUD]</button>
+                    <button class="term-btn" data-sector="SEMI">[SEMICONDUCTORS]</button>
+                    <button class="term-btn" data-sector="CONSUMER">[CONSUMER & LUXURY]</button>
+                    <button class="term-btn" data-sector="AUTO_FIN">[AUTO & FINANCE]</button>
+                </div>
+
+                <div class="filter-group">
+                    <div class="search-box">
+                        <span class="search-prefix">query&gt;</span>
+                        <input type="text" id="profile-search" class="search-input" placeholder="ticker, moat, SWOT...">
+                    </div>
+                    <button class="term-btn" id="btn-expand-all">[EXPAND ALL]</button>
+                    <button class="term-btn" id="btn-collapse-all">[COLLAPSE ALL]</button>
+                </div>
+            </div>
+
+            <div id="profiles-container"></div>
+        </div>
+
+        <!-- SECTION 03: COMPARATIVE CONCLUSION & FINAL SYNTHESIS -->
+        <div class="section" id="section-03">
+            <div class="section-header">03. COMPARATIVE CONCLUSION & FINAL SYNTHESIS</div>
+
+            <div class="subsection-title">NET PROFIT MARGIN BENCHMARK (APPROX. 2022–2025)</div>
+            <div class="ascii-chart" id="ascii-margin-chart"></div>
+
+            <div class="subsection-title">CROSS-COMPANY FINANCIAL & STRATEGIC MATRIX</div>
+            <div class="controls-bar">
+                <div class="filter-group" id="cash-filters">
+                    <button class="term-btn active" data-cash="ALL">[ALL CASH MODELS]</button>
+                    <button class="term-btn" data-cash="RECURRING">[RECURRING / DEFENSIVE]</button>
+                    <button class="term-btn" data-cash="CYCLICAL">[CYCLICAL / CAPEX]</button>
+                    <button class="term-btn" data-cash="HYBRID">[HYBRID / DUAL ENGINE]</button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>COMPANY</th>
+                            <th>CORE SECTOR</th>
+                            <th>NET MARGIN</th>
+                            <th>CASH GENERATION MODEL</th>
+                            <th>RISK & VALUATION (P/E)</th>
+                            <th>PRIMARY ECONOMIC MOAT</th>
+                        </tr>
+                    </thead>
+                    <tbody id="matrix-table-body"></tbody>
+                </table>
+            </div>
+
+            <div class="subsection-title">FINAL ANALYTICAL TAKEAWAYS</div>
+            <div class="takeaway-item">
+                <div class="takeaway-title">01. THE SHIFT FROM TANGIBLE ASSETS TO INTANGIBLE & ECOSYSTEM MOATS</div>
+                Companies achieving net margins above 25%–35% (NVIDIA, Microsoft, ASML, Apple) rely on intellectual property, proprietary software ecosystems (CUDA, iOS, Windows), or monopolistic technology rather than heavy physical manufacturing. Conversely, capital- and labor-intensive models like Amazon (~6%–8%) or Tesla (~8%–12%) require massive continuous CapEx to defend market share.
+            </div>
+            <div class="takeaway-item">
+                <div class="takeaway-title">02. RECURRING CASH FLOWS VS. CYCLICAL HYPERGROWTH</div>
+                <strong>The "Compounders & Defenders" (MSFT, MCD, KO, AAPL):</strong> Generate predictable, recurring cash flows through subscriptions, franchise rents, or daily consumer habits, insulating them from macroeconomic shocks and interest rate hikes.<br>
+                <strong>The "Cyclical Leaders" (NVDA, ASML, JPM, TSLA, LVMH):</strong> Experience sharper earnings swings tied to semiconductor CapEx cycles, credit conditions, or discretionary luxury spending, requiring fortress balance sheets to weather downturns.
+            </div>
+            <div class="takeaway-item">
+                <div class="takeaway-title">03. VALUATION MULTIPLES REFLECT CASH VISIBILITY AND GROWTH OPTIONALITY</div>
+                Financial markets assign premium P/E multiples either to hypergrowth AI enablers (NVDA, TSLA) or to ultra-predictable monopolies (MSFT, ASML), while traditional banking (JPM) and mature consumer staples (KO, MCD) trade at more moderate multiples in exchange for steady dividends and capital preservation.
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <span>SYSTEM READY // WAITING FOR USER INPUT</span>
+            <span class="cursor"></span>
+        </div>
+    </div>
+
+    <script src="stock-portfolio.js"></script>
+</body>
+</html>

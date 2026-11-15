@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantitative Engine - Terminal</title>
+    <link rel="stylesheet" href="quant-style.css">
+</head>
+<body>
+
+    <div class="terminal">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="title">MODULE : QUANTITATIVE PORTFOLIO ENGINE</div>
+            <div class="status-bar">
+                <span>STATUS : JSON FEED CONNECTED</span>
+                <span>UNIVERSE : 10 GLOBAL EQUITIES (3Y)</span>
+                <span>SESSION : MARKOWITZ_OPT_ACTIVE</span>
+            </div>
+        </div>
+
+        <!-- TICKER DÉFILANT -->
+        <div class="ticker-wrap">
+            <div class="ticker-move" id="ticker-content"></div>
+        </div>
+
+        <!-- KPI PORTEFEUILLE OPTIMAL -->
+        <div class="section-label">&gt; MARKOWITZ OPTIMAL PORTFOLIO (MAX SHARPE RATIO) :</div>
+        <div class="kpi-grid" id="portfolio-kpis"></div>
+
+        <!-- TABLEAU RENDEMENT & VOLATILITÉ -->
+        <div class="section-label">&gt; ESTIMATED ANNUALIZED PERFORMANCE &amp; VOLATILITY :</div>
+        <table class="quant-table">
+            <thead>
+                <tr>
+                    <th>TICKER</th>
+                    <th>COMPANY NAME</th>
+                    <th>ANNUAL RETURN</th>
+                    <th>ANNUAL VOLATILITY</th>
+                    <th>RETURN / RISK RATIO</th>
+                </tr>
+            </thead>
+            <tbody id="perf-table-body"></tbody>
+        </table>
+
+        <!-- TABLEAU TECHNIQUE, ALLOCATION & SIGNAUX -->
+        <div class="section-label">&gt; ASSET ALLOCATION &amp; TECHNICAL SIGNALS (SMA 50 + MOMENTUM 20D) :</div>
+        <div class="search-wrap">
+            <input type="text" id="search-input" placeholder="FILTER BY TICKER, NAME OR SIGNAL (EX: NVDA, HAUSSIER, BAISSIER)...">
+        </div>
+        <table class="quant-table">
+            <thead>
+                <tr>
+                    <th>TICKER</th>
+                    <th>PRICE</th>
+                    <th>SMA 50</th>
+                    <th>MOMENTUM (20D)</th>
+                    <th>OPT. WEIGHT</th>
+                    <th>SIGNAL</th>
+                </tr>
+            </thead>
+            <tbody id="signals-table-body"></tbody>
+        </table>
+
+        <!-- PANNEAU DE DÉTAILS INTERACTIF -->
+        <div class="details-panel" id="details-panel">
+            <div class="details-header">
+                <span id="detail-title">ASSET QUANT REPORT</span>
+                <span class="close-btn" id="close-btn-trigger">[X] CLOSE</span>
+            </div>
+            <div id="detail-metrics"></div>
+            <div id="detail-summary"></div>
+        </div>
+
+        <!-- TABLEAU GESTION DES RISQUES -->
+        <div class="section-label">&gt; RISK MANAGEMENT DASHBOARD (TAIL RISK &amp; DRAWDOWN) :</div>
+        <table class="quant-table">
+            <thead>
+                <tr>
+                    <th>TICKER</th>
+                    <th>MAX DRAWDOWN</th>
+                    <th>SORTINO RATIO</th>
+                    <th>VaR 95% (DAILY)</th>
+                    <th>CVaR 95% (ES)</th>
+                </tr>
+            </thead>
+            <tbody id="risk-table-body"></tbody>
+        </table>
+
+        <!-- MATRICE DE CORRÉLATION -->
+        <div class="section-label">&gt; CORRELATION MATRIX (3Y DAILY RETURNS) :</div>
+        <div class="corr-wrapper">
+            <table class="corr-table" id="corr-table"></table>
+        </div>
+
+        <!-- EXPORT & NAVIGATION -->
+        <div class="actions-bar">
+            <button class="action-btn" id="download-json-btn">[&darr;] DOWNLOAD RAW QUANT_DATA.JSON</button>
+        </div>
+
+        <div class="nav-bar">
+            <a href="index.html" class="back-link">&lt; RETURN TO MAIN TERMINAL</a>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <span>SYSTEM READY // CLICK ANY ASSET ROW FOR DEEP QUANT DIAGNOSTIC</span>
+            <span class="cursor"></span>
+        </div>
+    </div>
+
+    <script src="quant-dashboard.js"></script>
+</body>
+</html>

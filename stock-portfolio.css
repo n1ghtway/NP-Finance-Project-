@@ -1,0 +1,435 @@
+/* GLOBAL STYLES - STRICT MATCH TO style-intro.css */
+* {
+    box-sizing: border-box;
+} 
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 40px 20px;
+    background-color: #050805;
+    color: #00ff41;
+    font-family: "Courier New", monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.terminal {
+    max-width: 980px;
+    margin: 0 auto;
+    border: 1px solid #008f24;
+    padding: 30px;
+    background-color: #050805;
+    box-shadow: 0 0 18px rgba(0, 255, 65, 0.14);
+}
+
+/* HEADER */
+.header {
+    border-bottom: 1px solid #008f24;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    color: #00ff41;
+    margin-bottom: 8px;
+}
+
+.status-line {
+    font-size: 14px;
+    color: #00ff41;
+    letter-spacing: 1px;
+}
+
+/* RETURN BUTTON */
+.top-nav {
+    margin-bottom: 24px;
+}
+
+.return-link {
+    display: inline-block;
+    color: #00ff41;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 10px 20px;
+    border: 1px solid #008f24;
+    transition: 0.2s;
+}
+
+.return-link:hover {
+    background-color: rgba(0, 255, 65, 0.14);
+    border-color: #008f24;
+    color: #00ff41;
+}
+
+/* LIVE TICKER TAPE */
+.ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    border-top: 1px solid #008f24;
+    border-bottom: 1px solid #008f24;
+    background-color: rgba(0, 255, 65, 0.04);
+    padding: 8px 0;
+    margin-bottom: 30px;
+    white-space: nowrap;
+}
+
+.ticker-move {
+    display: inline-block;
+    animation: tickerScroll 36s linear infinite;
+}
+
+.ticker-wrap:hover .ticker-move {
+    animation-play-state: paused;
+}
+
+.ticker-item {
+    display: inline-block;
+    margin-right: 36px;
+    font-size: 13px;
+    color: #00ff41;
+}
+
+.ticker-pos {
+    color: #00ff41; /* Vert néon pour les hausses */
+}
+
+.ticker-neg {
+    color: #ff3333; /* Rouge néon pour les baisses */
+}
+
+@keyframes tickerScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* SECTION HEADINGS (NO // PREFIXES) */
+.section {
+    margin-bottom: 42px;
+}
+
+.section-header {
+    border-bottom: 1px solid #008f24;
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #00ff41;
+}
+
+.subsection-title {
+    font-size: 15px;
+    font-weight: bold;
+    color: #00ff41;
+    margin: 20px 0 10px 0;
+    letter-spacing: 1px;
+}
+
+/* PROBLEMATIQUE BOX */
+.prompt-box {
+    border: 1px solid #008f24;
+    padding: 16px;
+    background-color: rgba(0, 255, 65, 0.03);
+    margin-bottom: 22px;
+}
+
+.prompt-label {
+    color: #00ff41;
+    font-weight: bold;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* TABLES */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+th, td {
+    border: 1px solid #008f24;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background-color: rgba(0, 255, 65, 0.1);
+    color: #00ff41;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+tr.clickable-row {
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+tr.clickable-row:hover {
+    background-color: rgba(0, 255, 65, 0.14);
+    color: #00ff41;
+}
+
+/* CONTROLS & FILTERS */
+.controls-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding: 12px;
+    border: 1px solid #008f24;
+    background-color: rgba(0, 255, 65, 0.02);
+}
+
+.filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.term-btn {
+    background: transparent;
+    color: #00ff41;
+    border: 1px solid #008f24;
+    padding: 6px 10px;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.term-btn:hover, .term-btn.active {
+    background-color: rgba(0, 255, 65, 0.18);
+    border-color: #00ff41;
+    color: #00ff41;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid #008f24;
+    padding: 4px 10px;
+    background-color: #050805;
+}
+
+.search-prefix {
+    color: #00ff41;
+    margin-right: 6px;
+    font-weight: bold;
+}
+
+.search-input {
+    background: transparent;
+    border: none;
+    color: #00ff41;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    outline: none;
+    width: 180px;
+}
+
+.search-input::placeholder {
+    color: #008f24;
+}
+
+/* COMPANY PROFILE CARDS */
+.company-card {
+    border: 1px solid #008f24;
+    margin-bottom: 14px;
+    transition: border-color 0.2s;
+}
+
+.company-card:hover {
+    border-color: #00ff41;
+}
+
+.company-card-header {
+    padding: 12px 15px;
+    background-color: rgba(0, 255, 65, 0.06);
+    cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    user-select: none;
+}
+
+.company-card-header:hover {
+    background-color: rgba(0, 255, 65, 0.14);
+    color: #00ff41;
+}
+
+.company-title {
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+
+.company-meta {
+    font-size: 13px;
+    color: #00ff41;
+}
+
+.company-card-body {
+    display: none;
+    padding: 16px;
+    border-top: 1px solid #008f24;
+    font-size: 13.5px;
+}
+
+.company-card.open .company-card-body {
+    display: block;
+}
+
+.detail-row {
+    margin-bottom: 12px;
+}
+
+.detail-label {
+    color: #00ff41;
+    font-weight: bold;
+}
+
+/* SWOT GRID */
+.swot-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 14px 0;
+}
+
+.swot-cell {
+    border: 1px solid #008f24;
+    padding: 10px;
+    background-color: rgba(0, 255, 65, 0.02);
+}
+
+.swot-title {
+    font-weight: bold;
+    color: #00ff41;
+    margin-bottom: 4px;
+    font-size: 12.5px;
+    letter-spacing: 1px;
+}
+
+/* ASCII MARGIN BARS */
+.ascii-chart {
+    border: 1px solid #008f24;
+    padding: 16px;
+    margin-bottom: 22px;
+    background-color: rgba(0, 255, 65, 0.02);
+    font-size: 13px;
+}
+
+.ascii-row {
+    display: flex;
+    align-items: center;
+    margin: 6px 0;
+    gap: 10px;
+}
+
+.ascii-label {
+    width: 140px;
+    flex-shrink: 0;
+    color: #00ff41;
+}
+
+.ascii-bar {
+    color: #00ff41;
+    letter-spacing: 1px;
+}
+
+.ascii-val {
+    color: #008f24;
+    font-size: 12px;
+}
+
+/* TAKEAWAYS */
+.takeaway-item {
+    border-left: 2px solid #00ff41;
+    padding-left: 14px;
+    margin-bottom: 16px;
+}
+
+.takeaway-title {
+    color: #00ff41;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+/* FOOTER & CURSORS */
+.footer {
+    margin-top: 40px;
+    padding-top: 15px;
+    border-top: 1px solid #008f24;
+    font-size: 13px;
+    color: #008f24;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.cursor {
+    display: inline-block;
+    width: 10px;
+    height: 16px;
+    background-color: #00ff41;
+    vertical-align: middle;
+    animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+    to {
+        visibility: hidden;
+    }
+}
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+    body {
+        padding: 15px 10px;
+        font-size: 13.5px;
+    }
+
+    .terminal {
+        padding: 16px;
+    }
+
+    .swot-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ascii-label {
+        width: 105px;
+        font-size: 12px;
+    }
+
+    .ascii-bar {
+        font-size: 11px;
+    }
+}
+
+/* Effet au survol du bouton retour */
+#return-btn:hover {
+    color: #ffffff; /* Le texte devient blanc au survol */
+    background-color: rgba(0, 255, 65, 0.12); /* Optionnel : ajoute un léger fond rétro cohérent avec ton thème */
+    border-color: #00ff41; /* Optionnel : met en avant la bordure */
+}
