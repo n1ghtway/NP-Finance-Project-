@@ -49,6 +49,15 @@ body {
 }
 
 /* RETURN BUTTON */
+.back-link {
+    display: inline-block;
+    color: #00ff41;
+    text-decoration: none;
+    border: 1px solid #008f24;
+    padding: 10px 20px;
+    transition: 0.2s;
+}
+
 .back-link:hover {
     background-color: rgba(0, 255, 65, 0.12);
     border-color: #00ff41;
