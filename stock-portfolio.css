@@ -49,8 +49,10 @@ body {
 }
 
 /* RETURN BUTTON */
-.top-nav {
-    margin-bottom: 24px;
+.back-link:hover {
+    background-color: rgba(0, 255, 65, 0.12);
+    border-color: #00ff41;
+    color: #ffffff;
 }
 
 .return-link {
