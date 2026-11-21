@@ -1,178 +1,283 @@
 {
-    "tickers": [
-        "AAPL",
-        "MSFT",
-        "NVDA",
-        "ASML",
-        "AMZN",
-        "TSLA",
-        "MC.PA",
-        "MCD",
-        "KO",
-        "JPM"
-    ],
-    "performance": {
-        "AAPL": {
-            "return": 30.84,
-            "volatility": 24.87
-        },
-        "MSFT": {
-            "return": 9.28,
-            "volatility": 34.22
-        },
-        "NVDA": {
-            "return": -8.03,
-            "volatility": 38.9
-        },
-        "ASML": {
-            "return": 52.98,
-            "volatility": 49.08
-        },
-        "AMZN": {
-            "return": 18.75,
-            "volatility": 34.21
-        },
-        "TSLA": {
-            "return": 7.06,
-            "volatility": 46.06
-        },
-        "MC.PA": {
-            "return": -40.13,
-            "volatility": 27.91
-        },
-        "MCD": {
-            "return": -7.59,
-            "volatility": 20.99
-        },
-        "KO": {
-            "return": 38.43,
-            "volatility": 18.99
-        },
-        "JPM": {
-            "return": 17.95,
-            "volatility": 22.87
-        }
+  "optimal_portfolio": {
+    "expected_return": 22.34,
+    "volatility": 14.17,
+    "sharpe_ratio": 1.36,
+    "var_95": -1.34,
+    "cvar_95": -2.0
+  },
+  "assets": [
+    {
+      "ticker": "AAPL",
+      "name": "Apple Inc.",
+      "price": 342.56,
+      "sma_50": 341.59,
+      "momentum_20d": -1.41,
+      "annual_return": 23.93,
+      "annual_volatility": 26.98,
+      "optimal_weight": 10.3,
+      "signal": "NEUTRE",
+      "max_drawdown": -33.15,
+      "sortino": 1.32,
+      "var_95": -2.52,
+      "cvar_95": -3.81
     },
-    "correlation_matrix": {
-        "AAPL": {
-            "AAPL": 1.0,
-            "MSFT": 0.15,
-            "NVDA": 0.06,
-            "ASML": 0.07,
-            "AMZN": 0.08,
-            "TSLA": 0.14,
-            "MC.PA": 0.25,
-            "MCD": 0.22,
-            "KO": 0.16,
-            "JPM": 0.21
-        },
-        "MSFT": {
-            "AAPL": 0.15,
-            "MSFT": 1.0,
-            "NVDA": 0.22,
-            "ASML": 0.0,
-            "AMZN": 0.44,
-            "TSLA": 0.21,
-            "MC.PA": 0.16,
-            "MCD": 0.08,
-            "KO": -0.13,
-            "JPM": 0.11
-        },
-        "NVDA": {
-            "AAPL": 0.06,
-            "MSFT": 0.22,
-            "NVDA": 1.0,
-            "ASML": 0.54,
-            "AMZN": 0.21,
-            "TSLA": 0.42,
-            "MC.PA": 0.02,
-            "MCD": -0.28,
-            "KO": -0.3,
-            "JPM": 0.12
-        },
-        "ASML": {
-            "AAPL": 0.07,
-            "MSFT": 0.0,
-            "NVDA": 0.54,
-            "ASML": 1.0,
-            "AMZN": 0.2,
-            "TSLA": 0.45,
-            "MC.PA": 0.08,
-            "MCD": -0.21,
-            "KO": -0.3,
-            "JPM": 0.23
-        },
-        "AMZN": {
-            "AAPL": 0.08,
-            "MSFT": 0.44,
-            "NVDA": 0.21,
-            "ASML": 0.2,
-            "AMZN": 1.0,
-            "TSLA": 0.31,
-            "MC.PA": 0.3,
-            "MCD": 0.09,
-            "KO": -0.12,
-            "JPM": 0.18
-        },
-        "TSLA": {
-            "AAPL": 0.14,
-            "MSFT": 0.21,
-            "NVDA": 0.42,
-            "ASML": 0.45,
-            "AMZN": 0.31,
-            "TSLA": 1.0,
-            "MC.PA": 0.08,
-            "MCD": -0.13,
-            "KO": -0.18,
-            "JPM": 0.13
-        },
-        "MC.PA": {
-            "AAPL": 0.25,
-            "MSFT": 0.16,
-            "NVDA": 0.02,
-            "ASML": 0.08,
-            "AMZN": 0.3,
-            "TSLA": 0.08,
-            "MC.PA": 1.0,
-            "MCD": 0.29,
-            "KO": 0.2,
-            "JPM": 0.2
-        },
-        "MCD": {
-            "AAPL": 0.22,
-            "MSFT": 0.08,
-            "NVDA": -0.28,
-            "ASML": -0.21,
-            "AMZN": 0.09,
-            "TSLA": -0.13,
-            "MC.PA": 0.29,
-            "MCD": 1.0,
-            "KO": 0.51,
-            "JPM": 0.16
-        },
-        "KO": {
-            "AAPL": 0.16,
-            "MSFT": -0.13,
-            "NVDA": -0.3,
-            "ASML": -0.3,
-            "AMZN": -0.12,
-            "TSLA": -0.18,
-            "MC.PA": 0.2,
-            "MCD": 0.51,
-            "KO": 1.0,
-            "JPM": -0.04
-        },
-        "JPM": {
-            "AAPL": 0.21,
-            "MSFT": 0.11,
-            "NVDA": 0.12,
-            "ASML": 0.23,
-            "AMZN": 0.18,
-            "TSLA": 0.13,
-            "MC.PA": 0.2,
-            "MCD": 0.16,
-            "KO": -0.04,
-            "JPM": 1.0
-        }
+    {
+      "ticker": "MSFT",
+      "name": "Microsoft Corp.",
+      "price": 484.52,
+      "sma_50": 518.87,
+      "momentum_20d": -7.45,
+      "annual_return": 13.24,
+      "annual_volatility": 26.99,
+      "optimal_weight": 9.22,
+      "signal": "BAISSIER",
+      "max_drawdown": -34.5,
+      "sortino": 0.67,
+      "var_95": -2.47,
+      "cvar_95": -3.53
+    },
+    {
+      "ticker": "NVDA",
+      "name": "NVIDIA Corp.",
+      "price": 125.53,
+      "sma_50": 207.0,
+      "momentum_20d": -40.5,
+      "annual_return": 43.01,
+      "annual_volatility": 48.25,
+      "optimal_weight": 5.65,
+      "signal": "BAISSIER",
+      "max_drawdown": -47.53,
+      "sortino": 1.4,
+      "var_95": -4.38,
+      "cvar_95": -6.68
+    },
+    {
+      "ticker": "ASML",
+      "name": "ASML Holding",
+      "price": 1266.22,
+      "sma_50": 1623.35,
+      "momentum_20d": -19.34,
+      "annual_return": 31.73,
+      "annual_volatility": 44.76,
+      "optimal_weight": 9.73,
+      "signal": "BAISSIER",
+      "max_drawdown": -45.48,
+      "sortino": 1.05,
+      "var_95": -4.4,
+      "cvar_95": -6.63
+    },
+    {
+      "ticker": "AMZN",
+      "name": "Amazon.com Inc.",
+      "price": 246.82,
+      "sma_50": 255.03,
+      "momentum_20d": -0.48,
+      "annual_return": 23.55,
+      "annual_volatility": 32.56,
+      "optimal_weight": 6.75,
+      "signal": "BAISSIER",
+      "max_drawdown": -29.5,
+      "sortino": 1.14,
+      "var_95": -2.92,
+      "cvar_95": -4.26
+    },
+    {
+      "ticker": "TSLA",
+      "name": "Tesla Inc.",
+      "price": 345.82,
+      "sma_50": 375.64,
+      "momentum_20d": -7.09,
+      "annual_return": 29.14,
+      "annual_volatility": 58.46,
+      "optimal_weight": 2.06,
+      "signal": "BAISSIER",
+      "max_drawdown": -53.77,
+      "sortino": 0.79,
+      "var_95": -5.3,
+      "cvar_95": -7.74
+    },
+    {
+      "ticker": "MC.PA",
+      "name": "LVMH Moët Hennessy",
+      "price": 381.95,
+      "sma_50": 394.74,
+      "momentum_20d": -0.27,
+      "annual_return": -13.98,
+      "annual_volatility": 30.17,
+      "optimal_weight": 3.42,
+      "signal": "BAISSIER",
+      "max_drawdown": -54.01,
+      "sortino": -0.99,
+      "var_95": -2.83,
+      "cvar_95": -4.03
+    },
+    {
+      "ticker": "MCD",
+      "name": "McDonald's Corp.",
+      "price": 273.24,
+      "sma_50": 252.24,
+      "momentum_20d": 9.97,
+      "annual_return": 3.37,
+      "annual_volatility": 19.01,
+      "optimal_weight": 7.78,
+      "signal": "HAUSSIER",
+      "max_drawdown": -30.98,
+      "sortino": 0.03,
+      "var_95": -1.79,
+      "cvar_95": -2.7
+    },
+    {
+      "ticker": "KO",
+      "name": "Coca-Cola Co.",
+      "price": 96.99,
+      "sma_50": 91.8,
+      "momentum_20d": 4.62,
+      "annual_return": 21.74,
+      "annual_volatility": 16.65,
+      "optimal_weight": 26.28,
+      "signal": "HAUSSIER",
+      "max_drawdown": -15.5,
+      "sortino": 2.11,
+      "var_95": -1.49,
+      "cvar_95": -2.0
+    },
+    {
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "price": 310.53,
+      "sma_50": 336.81,
+      "momentum_20d": -6.35,
+      "annual_return": 28.97,
+      "annual_volatility": 23.61,
+      "optimal_weight": 18.79,
+      "signal": "BAISSIER",
+      "max_drawdown": -24.42,
+      "sortino": 1.77,
+      "var_95": -2.28,
+      "cvar_95": -3.59
     }
+  ],
+  "correlation_matrix": {
+    "AAPL": {
+      "AAPL": 1.0,
+      "MSFT": 0.33,
+      "NVDA": 0.28,
+      "ASML": 0.29,
+      "AMZN": 0.35,
+      "TSLA": 0.37,
+      "MC.PA": 0.15,
+      "MCD": 0.2,
+      "KO": 0.13,
+      "JPM": 0.28
+    },
+    "MSFT": {
+      "AAPL": 0.33,
+      "MSFT": 1.0,
+      "NVDA": 0.41,
+      "ASML": 0.25,
+      "AMZN": 0.54,
+      "TSLA": 0.31,
+      "MC.PA": 0.12,
+      "MCD": 0.06,
+      "KO": -0.08,
+      "JPM": 0.25
+    },
+    "NVDA": {
+      "AAPL": 0.28,
+      "MSFT": 0.41,
+      "NVDA": 1.0,
+      "ASML": 0.58,
+      "AMZN": 0.42,
+      "TSLA": 0.39,
+      "MC.PA": 0.04,
+      "MCD": -0.14,
+      "KO": -0.26,
+      "JPM": 0.25
+    },
+    "ASML": {
+      "AAPL": 0.29,
+      "MSFT": 0.25,
+      "NVDA": 0.58,
+      "ASML": 1.0,
+      "AMZN": 0.37,
+      "TSLA": 0.37,
+      "MC.PA": 0.17,
+      "MCD": -0.1,
+      "KO": -0.2,
+      "JPM": 0.25
+    },
+    "AMZN": {
+      "AAPL": 0.35,
+      "MSFT": 0.54,
+      "NVDA": 0.42,
+      "ASML": 0.37,
+      "AMZN": 1.0,
+      "TSLA": 0.39,
+      "MC.PA": 0.18,
+      "MCD": 0.05,
+      "KO": -0.12,
+      "JPM": 0.33
+    },
+    "TSLA": {
+      "AAPL": 0.37,
+      "MSFT": 0.31,
+      "NVDA": 0.39,
+      "ASML": 0.37,
+      "AMZN": 0.39,
+      "TSLA": 1.0,
+      "MC.PA": 0.07,
+      "MCD": -0.0,
+      "KO": -0.12,
+      "JPM": 0.31
+    },
+    "MC.PA": {
+      "AAPL": 0.15,
+      "MSFT": 0.12,
+      "NVDA": 0.04,
+      "ASML": 0.17,
+      "AMZN": 0.18,
+      "TSLA": 0.07,
+      "MC.PA": 1.0,
+      "MCD": 0.13,
+      "KO": 0.05,
+      "JPM": 0.15
+    },
+    "MCD": {
+      "AAPL": 0.2,
+      "MSFT": 0.06,
+      "NVDA": -0.14,
+      "ASML": -0.1,
+      "AMZN": 0.05,
+      "TSLA": -0.0,
+      "MC.PA": 0.13,
+      "MCD": 1.0,
+      "KO": 0.47,
+      "JPM": 0.12
+    },
+    "KO": {
+      "AAPL": 0.13,
+      "MSFT": -0.08,
+      "NVDA": -0.26,
+      "ASML": -0.2,
+      "AMZN": -0.12,
+      "TSLA": -0.12,
+      "MC.PA": 0.05,
+      "MCD": 0.47,
+      "KO": 1.0,
+      "JPM": 0.02
+    },
+    "JPM": {
+      "AAPL": 0.28,
+      "MSFT": 0.25,
+      "NVDA": 0.25,
+      "ASML": 0.25,
+      "AMZN": 0.33,
+      "TSLA": 0.31,
+      "MC.PA": 0.15,
+      "MCD": 0.12,
+      "KO": 0.02,
+      "JPM": 1.0
+    }
+  }
 }
