@@ -11,11 +11,11 @@ body {
 }
 
 .terminal {
-    max-width: 1050px;
+    max-width: 850px;
     margin: 0 auto;
     border: 1px solid #008f24;
     padding: 30px;
-    box-shadow: 0 0 18px rgba(0, 255, 65, 0.12);
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.12);
 }
 
 /* HEADER */
