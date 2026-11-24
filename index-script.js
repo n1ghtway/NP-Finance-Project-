@@ -152,3 +152,29 @@ function startLoading(destinationKey) {
 
     }, 180);
 }
+
+// ==========================================
+// 5. CHARGEMENT DE LA DERNIÈRE MISE À JOUR (JSON)
+// ==========================================
+// Récupère dynamiquement la date de mise à jour depuis le fichier JSON généré par Python
+document.addEventListener("DOMContentLoaded", function() {
+    const updateDateElement = document.getElementById("update-date");
+    if (!updateDateElement) return; // Sécurité si l'élément n'est pas sur cette page
+
+    fetch('quant_data.json')
+        .then(response => {
+            if (!response.ok) throw new Error("Fichier JSON introuvable");
+            return response.json();
+        })
+        .then(data => {
+            if (data.last_updated) {
+                updateDateElement.textContent = data.last_updated;
+            } else {
+                updateDateElement.textContent = "DATE INDISPONIBLE";
+            }
+        })
+        .catch(error => {
+            console.warn("Impossible de charger la date de mise à jour :", error);
+            updateDateElement.textContent = "HORS LIGNE";
+        });
+});
