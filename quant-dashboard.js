@@ -239,3 +239,26 @@ const FALLBACK_DATA = {
         "JPM":   { "AAPL": 0.21, "MSFT": 0.11, "NVDA": 0.12, "ASML": 0.23, "AMZN": 0.18, "TSLA": 0.13, "MC.PA": 0.20, "MCD": 0.16, "KO": -0.04, "JPM": 1.00 }
     }
 };
+// 5. CHARGEMENT DE LA DERNIÈRE MISE À JOUR (JSON)
+// ==========================================
+// Récupère dynamiquement la date de mise à jour depuis le fichier JSON généré par Python
+document.addEventListener("DOMContentLoaded", function() {
+    const updateDateElement = document.getElementById("update-date");
+    if (!updateDateElement) return; // Sécurité si l'élément n'est pas sur cette page
+
+    fetch('quant_data.json')
+        .then(response => {
+            if (!response.ok) throw new Error("Fichier JSON introuvable");
+            return response.json();
+        })
+        .then(data => {
+            if (data.last_updated) {
+                updateDateElement.textContent = data.last_updated;
+            } else {
+                updateDateElement.textContent = "DATE INDISPONIBLE";
+            }
+        })
+        .catch(error => {
+            console.warn("Impossible de charger la date de mise à jour :", error);
+            updateDateElement.textContent = "HORS LIGNE";
+        });
