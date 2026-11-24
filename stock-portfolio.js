@@ -29,10 +29,17 @@ function typeWriterEffect(elementId, text, speed = 40, callback) {
 
 // LOAD DATA FROM QUANT_DATA.JSON WITH OFFLINE FALLBACK
 async function loadQuantDataFeed() {
+    const updateDateElement = document.getElementById("update-date");
+
     try {
         const response = await fetch("quant_data.json");
         if (!response.ok) throw new Error("HTTP error");
         const data = await response.json();
+        
+        // Mise à jour de la date de dernière modification
+        if (updateDateElement) {
+            updateDateElement.textContent = data.last_updated ? data.last_updated : "DATE UNAVAILABLE";
+        }
         
         if (data && data.assets) {
             // Fusionne les données JSON avec les descriptions qualitatives de secours
@@ -55,6 +62,9 @@ async function loadQuantDataFeed() {
         }
     } catch (error) {
         console.warn("Chargement via fetch bloqué (mode fichier local ou hors-ligne), utilisation des données de secours.");
+        if (updateDateElement) {
+            updateDateElement.textContent = "OFFLINE";
+        }
         companiesData = FALLBACK_COMPANIES_DATA;
     }
 }
@@ -281,7 +291,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 1. Animation de frappe sur le titre
     typeWriterEffect("terminal-title", "FINANCIAL SYSTEM TERMINAL", 40);
 
-    // 2. Charge en priorité les données depuis quant_data.json avec secours hors-ligne
+    // 2. Charge en priorité les données depuis quant_data.json (met à jour le titre et les prix)
     await loadQuantDataFeed();
 
     // 3. Tente de charger les prix en direct (si API_KEY configurée)
@@ -315,7 +325,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     });
 
-    // 7. Barre de recherche query>
+    // 7. Barre de recherche query
     const searchInput = document.getElementById("profile-search");
     if (searchInput) {
         searchInput.addEventListener("input", renderProfiles);
@@ -344,28 +354,5 @@ document.addEventListener("DOMContentLoaded", async () => {
             currentCashFilter = btn.dataset.cash;
             renderMatrixTable();
         });
-    // ==========================================
-// 5. CHARGEMENT DE LA DERNIÈRE MISE À JOUR (JSON)
-// ==========================================
-// Récupère dynamiquement la date de mise à jour depuis le fichier JSON généré par Python
-document.addEventListener("DOMContentLoaded", function() {
-    const updateDateElement = document.getElementById("update-date");
-    if (!updateDateElement) return; // Sécurité si l'élément n'est pas sur cette page
-
-    fetch('quant_data.json')
-        .then(response => {
-            if (!response.ok) throw new Error("Fichier JSON introuvable");
-            return response.json();
-        })
-        .then(data => {
-            if (data.last_updated) {
-                updateDateElement.textContent = data.last_updated;
-            } else {
-                updateDateElement.textContent = "DATE INDISPONIBLE";
-            }
-        })
-        .catch(error => {
-            console.warn("Impossible de charger la date de mise à jour :", error);
-            updateDateElement.textContent = "HORS LIGNE";
-        });
+    });
 });
