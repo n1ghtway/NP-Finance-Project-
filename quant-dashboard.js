@@ -1,3 +1,6 @@
+// ==========================================
+// 1. VARIABLES GLOBALES & INITIALISATION
+// ==========================================
 let quantData = null;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -10,7 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("download-json-btn").addEventListener("click", downloadJsonFile);
 });
 
+// ==========================================
+// 2. CHARGEMENT DES DONNÉES (JSON ou FALLBACK)
+// ==========================================
 async function loadQuantData() {
+    const updateDateElement = document.getElementById("update-date");
+
     try {
         const response = await fetch("quant_data.json");
         if (!response.ok) throw new Error("HTTP error");
@@ -19,6 +27,16 @@ async function loadQuantData() {
         console.warn("Chargement via fetch bloqué (mode fichier local), utilisation du fallback JSON.");
         quantData = FALLBACK_DATA;
     }
+
+    // Affichage de la date de dernière mise à jour dans l'encadré vert
+    if (updateDateElement) {
+        if (quantData && quantData.last_updated) {
+            updateDateElement.textContent = quantData.last_updated;
+        } else {
+            updateDateElement.textContent = "DATE UNAVAILABLE";
+        }
+    }
+
     renderAll();
 }
 
@@ -31,6 +49,9 @@ function renderAll() {
     renderCorrelationMatrix();
 }
 
+// ==========================================
+// 3. AFFICHAGE DES COMPOSANTS (KPIs, TABLEAUX)
+// ==========================================
 function renderTicker() {
     const tickerContainer = document.getElementById("ticker-content");
     tickerContainer.innerHTML = "";
@@ -205,8 +226,11 @@ function downloadJsonFile() {
     dlAnchor.remove();
 }
 
-// Données de secours si ouverture directe en local (file://)
+// ==========================================
+// 4. DONNÉES DE SECOURS (FALLBACK)
+// ==========================================
 const FALLBACK_DATA = {
+    "last_updated": "11/24/2026 at 23:32 (OFFLINE)",
     "optimal_portfolio": {
         "expected_return": 24.93,
         "volatility": 12.79,
@@ -239,26 +263,3 @@ const FALLBACK_DATA = {
         "JPM":   { "AAPL": 0.21, "MSFT": 0.11, "NVDA": 0.12, "ASML": 0.23, "AMZN": 0.18, "TSLA": 0.13, "MC.PA": 0.20, "MCD": 0.16, "KO": -0.04, "JPM": 1.00 }
     }
 };
-// 5. CHARGEMENT DE LA DERNIÈRE MISE À JOUR (JSON)
-// ==========================================
-// Récupère dynamiquement la date de mise à jour depuis le fichier JSON généré par Python
-document.addEventListener("DOMContentLoaded", function() {
-    const updateDateElement = document.getElementById("update-date");
-    if (!updateDateElement) return; // Sécurité si l'élément n'est pas sur cette page
-
-    fetch('quant_data.json')
-        .then(response => {
-            if (!response.ok) throw new Error("Fichier JSON introuvable");
-            return response.json();
-        })
-        .then(data => {
-            if (data.last_updated) {
-                updateDateElement.textContent = data.last_updated;
-            } else {
-                updateDateElement.textContent = "DATE INDISPONIBLE";
-            }
-        })
-        .catch(error => {
-            console.warn("Impossible de charger la date de mise à jour :", error);
-            updateDateElement.textContent = "HORS LIGNE";
-        });
