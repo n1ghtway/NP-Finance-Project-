@@ -7,7 +7,57 @@ const companiesData = [
         "isPositive": true,
         "verdict": "BUY / STRONG",
         "metrics": "Revenue: $383.2B | Net Margin: 25.3% | PER: 28.4",
-        "summary": "Massive cash reserve and strong services resilience. Consistent growth despite hardware slowdown."
+        "summary": "Massive cash reserve and strong services resilience. Consistent growth despite hardware slowdown.",
+        "hasFullReport": false,
+        "reportNote": "Full audit report not available for now."
+    },
+    {
+        "ticker": "MSFT",
+        "name": "Microsoft Corporation",
+        "sector": "Cloud & Enterprise Software",
+        "change": "-0.98%",
+        "isPositive": false,
+        "verdict": "QUALITY GROWTH / CORE",
+        "metrics": "Revenue: $245.1B | Net Margin: 35.6% | PER: 32.1",
+        "summary": "High recurring SaaS/Cloud revenues and early lead in enterprise generative AI via Azure and Copilot.",
+        "hasFullReport": false,
+        "reportNote": "Full audit report not available for now."
+    },
+    {
+        "ticker": "NVDA",
+        "name": "NVIDIA Corporation",
+        "sector": "Semiconductors & AI",
+        "change": "-23.95%",
+        "isPositive": false,
+        "verdict": "HIGH GROWTH / VOLATILE",
+        "metrics": "Revenue: $96.3B | Net Margin: 49.0% | PER: 45.0",
+        "summary": "Near-monopoly in AI training chips locked in by the proprietary CUDA software ecosystem.",
+        "hasFullReport": false,
+        "reportNote": "Full audit report not available for now."
+    },
+    {
+        "ticker": "ASML",
+        "name": "ASML Holding N.V.",
+        "sector": "Semiconductor Equipment",
+        "change": "-8.80%",
+        "isPositive": false,
+        "verdict": "MONOPOLY GROWTH / HOLD",
+        "metrics": "Revenue: €27.6B | Net Margin: 28.2% | PER: 38.4",
+        "summary": "Absolute technological monopoly in EUV lithography systems essential for advanced sub-2nm chip manufacturing.",
+        "hasFullReport": false,
+        "reportNote": "Full audit report not available for now."
+    },
+    {
+        "ticker": "AMZN",
+        "name": "Amazon.com, Inc.",
+        "sector": "E-Commerce & Cloud",
+        "change": "+6.66%",
+        "isPositive": true,
+        "verdict": "REINVESTING GROWTH / BUY",
+        "metrics": "Revenue: $574.8B | Net Margin: 7.2% | PER: 41.2",
+        "summary": "Dual powerhouse combining global automated logistics and ultra-profitable AWS cloud infrastructure.",
+        "hasFullReport": false,
+        "reportNote": "Full audit report not available for now."
     },
     {
         "ticker": "TSLA",
@@ -17,7 +67,9 @@ const companiesData = [
         "isPositive": true,
         "verdict": "HOLD / VOLATILE",
         "metrics": "Revenue: $96.7B | Net Margin: 11.2% | PER: 62.1",
-        "summary": "Margin compression following vehicle price cuts. Strong long-term AI potential but tight valuation."
+        "summary": "Margin compression following vehicle price cuts. Strong long-term AI potential and energy storage growth.",
+        "hasFullReport": false,
+        "reportNote": "Full audit report not available for now."
     },
     {
         "ticker": "MC.PA",
@@ -27,7 +79,9 @@ const companiesData = [
         "isPositive": true,
         "verdict": "BUY / SOLID",
         "metrics": "Revenue: €86.2B | Net Margin: 17.6% | PER: 23.5",
-        "summary": "Undisputed luxury leader with high pricing power and excellent capital return."
+        "summary": "Undisputed luxury leader with high pricing power across 75+ prestigious Maisons and excellent capital return.",
+        "hasFullReport": false,
+        "reportNote": "Full audit report not available for now."
     },
     {
         "ticker": "MCD",
@@ -64,5 +118,29 @@ const companiesData = [
             "valuation": "Valuation Multiples: Historical P/E ranges between 22x–25x, EV/EBITDA between 15x–18x, backed by steady FCF generation. Competitive Benchmark: Outperforms peers like Yum! Brands (similar franchise model but lower direct real estate footprint), Restaurant Brands International (higher leverage), and Wendy's (smaller scale). McDonald's boasts operating and EBITDA margins exceeding 40-45% due to rental income.",
             "conclusion": "FAIRLY VALUED / CORE HOLDING — While trading at premium multiples (22x-25x P/E), McDonald's defensive quality, unbeatable real estate backing, inflation protection, and reliable cash generation make it an essential core holding for long-term investors."
         }
+    },
+    {
+        "ticker": "KO",
+        "name": "The Coca-Cola Company",
+        "sector": "Consumer Staples (Beverages)",
+        "change": "+5.70%",
+        "isPositive": true,
+        "verdict": "DEFENSIVE / DIVIDEND KING",
+        "metrics": "Revenue: $45.8B | Net Margin: 23.1% | PER: 24.2",
+        "summary": "Unrivaled global distribution network and concentrate model supporting 60+ consecutive years of dividend hikes.",
+        "hasFullReport": false,
+        "reportNote": "Full audit report not available for now."
+    },
+    {
+        "ticker": "JPM",
+        "name": "JPMorgan Chase & Co.",
+        "sector": "Universal Banking & Finance",
+        "change": "+1.90%",
+        "isPositive": true,
+        "verdict": "BUY / FORTRESS BALANCE SHEET",
+        "metrics": "Revenue: >$158B | Net Margin: 33.6% | PER: 12.8",
+        "summary": "Global universal banking leader with strong fortress balance sheet, diversified revenue streams, and crisis M&A capacity.",
+        "hasFullReport": false,
+        "reportNote": "Full audit report not available for now."
     }
 ];
