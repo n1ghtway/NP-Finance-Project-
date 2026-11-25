@@ -50,7 +50,7 @@
         .action-btn { background: transparent; border: 1px solid #008f24; color: #00ff41; padding: 8px 15px; cursor: pointer; margin-top: 15px; font-family: inherit; font-weight: bold; transition: 0.2s; }
         .action-btn:hover { background-color: rgba(0, 255, 65, 0.2); border-color: #00ff41; }
         .back-link { display: inline-block; color: #00ff41; text-decoration: none; border: 1px solid #008f24; padding: 10px 20px; transition: 0.2s; }
-        .back-link:hover { background-color: rgba(0, 255, 65, 0.12); border: 1px solid #00ff41; color: #ffffff; }
+        .back-link:hover { background-color: rgba(0, 255, 65, 0.12); border: 1px solid #008f24; color: #ffffff; }
     </style>
 </head>
 <body>
@@ -61,7 +61,7 @@
             <div class="title">FINANCIAL SYSTEM TERMINAL</div>
             <div>NETWORK ACCESS : ESTABLISHED</div>
             <div>SESSION : FINANCIAL_ANALYSIS_001</div>
-            <div>LAST UPDATED : NOT FOUND </div>
+            <div>LAST UPDATED : <span id="update-date">LOADING...</span></div>
         </div>
 
         <!-- Ticker -->
@@ -101,8 +101,11 @@
             <div id="detail-metrics" style="margin-bottom: 15px; color: #ffffff;"></div>
             <div id="detail-summary"></div>
             
-            <!-- Open Full Audit Report Button -->
-            <button class="action-btn" id="toggle-details-btn" style="display: none;">[>] OPEN FULL AUDIT REPORT (VIEW & PDF)</button>
+            <!-- Open Full Audit Report Button / Message -->
+            <div id="report-action-container" style="margin-top: 15px;">
+                <button class="action-btn" id="toggle-details-btn" style="display: none;">[>] OPEN FULL AUDIT REPORT (VIEW & PDF)</button>
+                <div id="report-not-available" style="display: none; color: #ff3333; font-weight: bold;">[!] FULL AUDIT REPORT NOT AVAILABLE FOR NOW</div>
+            </div>
         </div>
 
         <div>
@@ -119,6 +122,28 @@
     <script src="financial-analysis-data.js"></script>
 
     <script>
+        // Récupération automatique de la date depuis quant_data.json
+        document.addEventListener("DOMContentLoaded", function() {
+            const updateDateElement = document.getElementById("update-date");
+            if (!updateDateElement) return;
+
+            fetch('quant_data.json')
+                .then(response => {
+                    if (!response.ok) throw new Error("JSON introuvable");
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.last_updated) {
+                        updateDateElement.textContent = data.last_updated;
+                    } else {
+                        updateDateElement.textContent = "DATE UNAVAILABLE";
+                    }
+                })
+                .catch(error => {
+                    updateDateElement.textContent = "OFFLINE";
+                });
+        });
+
         const companies = companiesData;
         let currentSelectedCompany = null;
 
@@ -140,7 +165,7 @@
                 tickerSpan.innerHTML = `<span style="color: ${colorCode};">${comp.ticker} ${arrow} ${comp.change}</span>`;
                 tickerContainer.appendChild(tickerSpan);
 
-                // Remplissage du tableau (seule la variation prend la couleur dynamique, le reste garde le style terminal propre)
+                // Remplissage du tableau
                 const row = document.createElement("tr");
                 row.className = "company-row";
                 row.onclick = () => showDetails(index);
@@ -173,16 +198,19 @@
             document.getElementById("detail-summary").innerHTML = 
                 `&gt; <strong>ANALYSIS REPORT :</strong><br><br>${currentSelectedCompany.summary}`;
 
-            // Handle full audit report button visibility inside showDetails
+            // Gestion de l'affichage du bouton ou du message rouge
             const toggleBtn = document.getElementById("toggle-details-btn");
+            const notAvailableMsg = document.getElementById("report-not-available");
 
             if (currentSelectedCompany.hasFullReport) {
-                toggleBtn.style.display = "inline-block";
+                if (toggleBtn) toggleBtn.style.display = "inline-block";
+                if (notAvailableMsg) notAvailableMsg.style.display = "none";
                 toggleBtn.onclick = () => {
                     window.location.href = `financial-analysis-audit-report-mcd.html?ticker=${currentSelectedCompany.ticker}`;
                 };
             } else {
-                toggleBtn.style.display = "none";
+                if (toggleBtn) toggleBtn.style.display = "none";
+                if (notAvailableMsg) notAvailableMsg.style.display = "block";
             }
 
             panel.style.display = "block";
