@@ -144,3 +144,25 @@ const companiesData = [
         "reportNote": "Full audit report not available for now."
     }
 ];
+
+// Chargement dynamique de la date de dernière mise à jour
+document.addEventListener("DOMContentLoaded", function() {
+    const updateDateElement = document.getElementById("update-date");
+    if (!updateDateElement) return;
+
+    fetch('quant_data.json')
+        .then(response => {
+            if (!response.ok) throw new Error("JSON introuvable");
+            return response.json();
+        })
+        .then(data => {
+            if (data.last_updated) {
+                updateDateElement.textContent = data.last_updated;
+            } else {
+                updateDateElement.textContent = "DATE UNAVAILABLE";
+            }
+        })
+        .catch(error => {
+            updateDateElement.textContent = "OFFLINE";
+        });
+});
